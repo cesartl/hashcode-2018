@@ -11,4 +11,11 @@ public class Ride {
     private long start;
     private long end;
 
+    public long score(long bonus) {
+        if (end < rideRequest.getLatest()) {
+            return rideRequest.distance() + (start == rideRequest.getEarliest() ? bonus : 0);
+        } else {
+            return 0;
+        }
+    }
 }

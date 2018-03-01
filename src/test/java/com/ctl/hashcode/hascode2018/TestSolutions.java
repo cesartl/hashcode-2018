@@ -24,5 +24,6 @@ public class TestSolutions {
         final Solver solver = new Solver(new BasicScheduler());
         solver.solve(a);
         System.out.println();
+        System.out.println(a.score());
     }
 }

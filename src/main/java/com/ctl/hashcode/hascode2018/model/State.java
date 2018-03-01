@@ -35,7 +35,11 @@ public class State {
         car.setRides(newRides);
     }
 
-    public long score(){
-        return 0;
+    public long score() {
+        return cars.values().stream()
+                .flatMap(c -> c.getRides().stream())
+                .map(r -> r.score(bonus))
+                .mapToLong(s -> s)
+                .sum();
     }
 }
