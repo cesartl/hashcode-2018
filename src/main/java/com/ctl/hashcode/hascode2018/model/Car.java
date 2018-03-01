@@ -26,6 +26,7 @@ public class Car {
                     .rideRequest(rideRequest)
                     .arriveAt(Math.max((long) travelTime, rideRequest.getEarliest()))
                     .waitFor(Math.max(0, rideRequest.getEarliest() - (long) travelTime))
+                    .preTravel(Position.start().distanceWith(rideRequest.getTo()))
                     .carId(id)
                     .build();
         } else {
@@ -37,6 +38,7 @@ public class Car {
                     .arriveAt(Math.max(arriveAt, rideRequest.getEarliest()))
                     .waitFor(Math.max(0, rideRequest.getEarliest() - arriveAt))
                     .carId(id)
+                    .preTravel(travelTime)
                     .build();
         }
     }

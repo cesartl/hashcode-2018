@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 
 public class TestSolutions {
 
@@ -64,17 +65,22 @@ public class TestSolutions {
 
     @Test
     public void solveAll() throws Exception {
-        solve(getB(), "b.solution");
-        solve(getC(), "c.solution");
-        solve(getD(), "d.solution");
-        solve(getE(), "e.solution");
+        boolean write = false;
+        long total = 0;
+        total += solve(getB(), "b.solution", write);
+        total += solve(getC(), "c.solution", write);
+        total += solve(getD(), "d.solution", write);
+        total += solve(getE(), "e.solution", write);
+        System.out.println(MessageFormat.format("{0}", total));
     }
 
 
-
-    private void solve(State state, String fileName) throws IOException {
+    private long solve(State state, String fileName, boolean write) throws IOException {
         final Solver solver = new Solver(new BasicScheduler());
         solver.solve(state);
-        FileUtils.write(new File(fileName), state.outputRides(), Charset.defaultCharset());
+        if (write) {
+            FileUtils.write(new File(fileName), state.outputRides(), Charset.defaultCharset());
+        }
+        return state.score();
     }
 }

@@ -20,6 +20,7 @@ public class Solver {
             if (ride.isPresent()) {
                 state.addRide(ride.get());
             } else {
+                System.out.println("No ride!!!!!!");
                 break;
             }
         }

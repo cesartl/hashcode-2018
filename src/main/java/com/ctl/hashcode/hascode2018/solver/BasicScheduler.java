@@ -15,7 +15,8 @@ public class BasicScheduler implements Scheduler {
         //1 find the cars that can be here on time
         return state.getCars().values().stream()
                 .map(car -> car.quote(rideRequest))
-                .min(Comparator.comparing(Quote::getArriveAt).thenComparing(Quote::getWaitFor))
+                .min(Comparator.comparing(Quote::getArriveAt)
+                        .thenComparing(Quote::wasted))
                 .map(quote -> Ride.builder()
                         .carId(quote.getCarId())
                         .rideRequest(rideRequest)

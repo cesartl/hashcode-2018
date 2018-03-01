@@ -10,4 +10,9 @@ public class Quote {
     private long waitFor;
     private int carId;
     private RideRequest rideRequest;
+    private long preTravel;
+
+    public long wasted() {
+        return waitFor + preTravel;
+    }
 }
