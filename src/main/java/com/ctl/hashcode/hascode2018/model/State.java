@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 import java.util.Map;
 
 @Value
@@ -28,6 +30,9 @@ public class State {
     }
 
     public void addRide(Ride ride) {
-        cars.get(ride.getCarId()).getRides().add(ride);
+        final Car car = cars.get(ride.getCarId());
+        final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
+        newRides.add(ride);
+        car.setRides(newRides);
     }
 }

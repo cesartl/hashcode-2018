@@ -14,7 +14,7 @@ public class Solver {
 
     public void solve(State state) {
 
-        while (state.getRideRequests().isEmpty()) {
+        while (!state.getRideRequests().isEmpty()) {
             final RideRequest rideRequest = state.getRideRequests().pop();
             Optional<Ride> ride = scheduler.schedule(state, rideRequest);
             if (ride.isPresent()) {

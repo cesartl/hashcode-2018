@@ -1,25 +1,22 @@
 package com.ctl.hashcode.hascode2018.model;
 
-import lombok.Builder;
-import lombok.Singular;
-import lombok.Value;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Value
+@AllArgsConstructor
+@Getter
+@Setter
 @Builder
+@ToString
 public class Car {
     private int id;
+
     @Singular
     private List<Ride> rides;
 
-    public static Car empty(int id) {
-        return new Car(id, new ArrayList<>());
-    }
-
     public Ride getLastRide() {
-        return rides.get(rides.size());
+        return rides.get(rides.size() -1);
     }
 
     public Quote quote(RideRequest rideRequest) {
