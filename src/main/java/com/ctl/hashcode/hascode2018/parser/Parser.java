@@ -1,5 +1,6 @@
 package com.ctl.hashcode.hascode2018.parser;
 
+import com.ctl.hashcode.hascode2018.model.Position;
 import com.ctl.hashcode.hascode2018.model.RideRequest;
 import com.ctl.hashcode.hascode2018.model.State;
 import org.apache.commons.io.IOUtils;
@@ -26,11 +27,35 @@ public class Parser {
         int bonus = Integer.parseInt(headerValues[4]);
         long steps = Integer.parseInt(headerValues[5]);
 
+        int id = 0;
         Deque<RideRequest> rideRequests = new ArrayDeque<>();
         for (String ride : rides) {
+            String[] rideValues = ride.split(" ");
+            int r1 = Integer.parseInt(rideValues[0]);
+            int c1 = Integer.parseInt(rideValues[1]);
+            int r2 = Integer.parseInt(rideValues[2]);
+            int c2 = Integer.parseInt(rideValues[3]);
+            int e = Integer.parseInt(rideValues[4]);
+            int l = Integer.parseInt(rideValues[5]);
+
+            Position start = Position.builder()
+                    .x(c1)
+                    .y(r1)
+                    .build();
+            Position end = Position.builder()
+                    .x(c2)
+                    .y(r2)
+                    .build();
+
             RideRequest r = RideRequest.builder()
+                    .id(id)
+                    .from(start)
+                    .to(end)
+                    .earliest(e)
+                    .latest(l)
                     .build();
             rideRequests.add(r);
+            ++id;
         }
 
         State state = State.builder()
