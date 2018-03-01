@@ -16,20 +16,29 @@ public class Car {
     private List<Ride> rides;
 
     public Ride getLastRide() {
-        return rides.get(rides.size() -1);
+        return rides.get(rides.size() - 1);
     }
 
     public Quote quote(RideRequest rideRequest) {
-        //TODO check
-        final Ride lastRide = getLastRide();
-        final int travelTime = Position.distance(lastRide.getRideRequest().getTo(), rideRequest.getFrom());
-        final long arriveAt = lastRide.getEnd() + travelTime;
-        return Quote.builder()
-                .rideRequest(rideRequest)
-                .arriveAt(Math.max(arriveAt, rideRequest.getEarliest()))
-                .waitFor(Math.max(0, rideRequest.getEarliest() - arriveAt))
-                .carId(id)
-                .build();
+        if (rides.isEmpty()) {
+            final int travelTime = Position.distance(Position.start(), rideRequest.getFrom());
+            return Quote.builder()
+                    .rideRequest(rideRequest)
+                    .arriveAt(Math.max((long) travelTime, rideRequest.getEarliest()))
+                    .waitFor(Math.max(0, rideRequest.getEarliest() - (long) travelTime))
+                    .carId(id)
+                    .build();
+        } else {
+            final Ride lastRide = getLastRide();
+            final int travelTime = Position.distance(lastRide.getRideRequest().getTo(), rideRequest.getFrom());
+            final long arriveAt = lastRide.getEnd() + travelTime;
+            return Quote.builder()
+                    .rideRequest(rideRequest)
+                    .arriveAt(Math.max(arriveAt, rideRequest.getEarliest()))
+                    .waitFor(Math.max(0, rideRequest.getEarliest() - arriveAt))
+                    .carId(id)
+                    .build();
+        }
     }
 
     public static Car init(int id) {

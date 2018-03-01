@@ -16,4 +16,8 @@ public class Position {
     public static int distance(Position p1, Position p2){
         return p1.distanceWith(p2);
     }
+
+    public static Position start(){
+        return new Position(0, 0);
+    }
 }

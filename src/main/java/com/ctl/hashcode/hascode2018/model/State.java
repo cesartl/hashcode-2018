@@ -7,7 +7,6 @@ import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 import java.util.Map;
 
 @Value
@@ -34,5 +33,9 @@ public class State {
         final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
         newRides.add(ride);
         car.setRides(newRides);
+    }
+
+    public long score(){
+        return 0;
     }
 }
