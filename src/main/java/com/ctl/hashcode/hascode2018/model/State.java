@@ -2,6 +2,7 @@ package com.ctl.hashcode.hascode2018.model;
 
 import com.google.common.collect.ListMultimap;
 import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 
 import java.util.Deque;
@@ -19,6 +20,7 @@ public class State {
     /**
      * Cars by ID
      */
+    @Singular
     private Map<Integer, Car> cars;
 
     public ListMultimap<Integer, Integer> computeRides() {

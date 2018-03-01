@@ -10,4 +10,5 @@ public class Ride {
     private RideRequest rideRequest;
     private long start;
     private long end;
+
 }

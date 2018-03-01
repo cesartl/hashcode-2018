@@ -9,4 +9,5 @@ public class Quote {
     private long arriveAt;
     private long waitFor;
     private int carId;
+    private RideRequest rideRequest;
 }

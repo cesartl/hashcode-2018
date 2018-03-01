@@ -1,5 +1,6 @@
 package com.ctl.hashcode.hascode2018.parser;
 
+import com.ctl.hashcode.hascode2018.model.Car;
 import com.ctl.hashcode.hascode2018.model.Position;
 import com.ctl.hashcode.hascode2018.model.RideRequest;
 import com.ctl.hashcode.hascode2018.model.State;
@@ -62,13 +63,20 @@ public class Parser {
             ++id;
         }
 
-        State state = State.builder()
+
+        final State.StateBuilder builder = State.builder()
                 .rows(rows)
                 .cols(cols)
                 .numberOfCars(numCars)
                 .bonus(bonus)
                 .steps(steps)
-                .rideRequests(rideRequests)
+                .rideRequests(rideRequests);
+
+        for (int carId = 0; carId < numCars; carId++) {
+            builder.car(carId, Car.init(carId));
+        }
+
+        State state = builder
                 .build();
         return state;
     }
