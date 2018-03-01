@@ -29,6 +29,27 @@ public class TestSolutions {
         return Parser.readFile(fileName);
     }
 
+    public State getC() throws Exception {
+        String file = "/inputs/c_no_hurry.in";
+        URL path = TestParser.class.getResource(file);
+        final String fileName = Paths.get(path.toURI()).toFile().getAbsolutePath();
+        return Parser.readFile(fileName);
+    }
+
+    public State getD() throws Exception {
+        String file = "/inputs/d_metropolis.in";
+        URL path = TestParser.class.getResource(file);
+        final String fileName = Paths.get(path.toURI()).toFile().getAbsolutePath();
+        return Parser.readFile(fileName);
+    }
+
+    public State getE() throws Exception {
+        String file = "/inputs/e_high_bonus.in";
+        URL path = TestParser.class.getResource(file);
+        final String fileName = Paths.get(path.toURI()).toFile().getAbsolutePath();
+        return Parser.readFile(fileName);
+    }
+
     @Test
     public void testA() throws Exception {
         final State a = getA();
@@ -42,9 +63,11 @@ public class TestSolutions {
     }
 
     @Test
-    public void testB() throws Exception {
-        final State b = getB();
-        solve(b, "b.solution");
+    public void solveAll() throws Exception {
+        solve(getB(), "b.solution");
+        solve(getC(), "c.solution");
+        solve(getD(), "d.solution");
+        solve(getE(), "e.solution");
     }
 
 
