@@ -13,7 +13,7 @@ public class Solver {
     private final Scheduler scheduler;
 
     public void solve(State state) {
-
+        state.sortRides();
         while (!state.getRideRequests().isEmpty()) {
             final RideRequest rideRequest = state.getRideRequests().pop();
             Optional<Ride> ride = scheduler.schedule(state, rideRequest);

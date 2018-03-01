@@ -15,4 +15,8 @@ public class RideRequest {
     public long distance() {
         return from.distanceWith(to);
     }
+
+    public long antiDistance() {
+        return -from.distanceWith(to);
+    }
 }

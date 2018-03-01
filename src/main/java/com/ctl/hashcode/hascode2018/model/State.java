@@ -1,15 +1,15 @@
 package com.ctl.hashcode.hascode2018.model;
 
 import com.google.common.collect.ListMultimap;
-import lombok.Builder;
-import lombok.Singular;
-import lombok.Value;
+import javafx.geometry.Pos;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-@Value
+@Getter
+@AllArgsConstructor
+@ToString
 @Builder
 public class State {
     private int rows;
@@ -43,7 +43,19 @@ public class State {
                 .sum();
     }
 
-    public String outputRides(){
+    public void sortRides() {
+
+        this.rideRequests = rideRequests.stream()
+                .sorted(Comparator.comparing(RideRequest::getEarliest).thenComparing(RideRequest::antiDistance))
+                .collect(Collectors.toCollection(LinkedList::new));
+//
+//        this.rideRequests = rideRequests.stream()
+//                .sorted(Comparator.comparing(RideRequest::getEarliest)
+//                        .thenComparing(rideRequest -> -rideRequest.distance()))
+//                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public String outputRides() {
         StringBuilder sb = new StringBuilder();
         for (Car car : cars.values()) {
             sb.append(car.getRides().size());

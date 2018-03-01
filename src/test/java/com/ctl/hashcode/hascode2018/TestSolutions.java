@@ -65,7 +65,7 @@ public class TestSolutions {
 
     @Test
     public void solveAll() throws Exception {
-        boolean write = false;
+        boolean write = true;
         long total = 0;
         total += solve(getB(), "b.solution", write);
         total += solve(getC(), "c.solution", write);
@@ -81,6 +81,11 @@ public class TestSolutions {
         if (write) {
             FileUtils.write(new File(fileName), state.outputRides(), Charset.defaultCharset());
         }
+//        System.out.println("-----------");
+//        state.getCars().values().stream()
+//                .map(c -> c.getRides().size())
+//                .forEach(c -> System.out.println("Rides: " + c));
+//        System.out.println("-----------");
         return state.score();
     }
 }
