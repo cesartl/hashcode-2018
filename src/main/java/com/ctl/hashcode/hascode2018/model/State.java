@@ -6,6 +6,7 @@ import lombok.Value;
 
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 @Value
 @Builder
@@ -16,10 +17,17 @@ public class State {
     private Deque<RideRequest> rideRequests;
     private int bonus;
     private long steps;
-    private long currentStep;
-    private List<Car> cars;
+    /**
+     * Cars by ID
+     */
+    private Map<Integer, Car> cars;
 
     public ListMultimap<Integer, Integer> computeRides() {
         return null;
+    }
+
+    public void addRide(Ride ride) {
+        //TODO
+        //
     }
 }
