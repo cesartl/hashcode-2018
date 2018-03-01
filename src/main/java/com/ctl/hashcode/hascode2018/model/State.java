@@ -1,10 +1,10 @@
 package com.ctl.hashcode.hascode2018.model;
 
 import com.google.common.collect.ListMultimap;
-import javafx.geometry.Pos;
 import lombok.*;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -38,21 +38,38 @@ public class State {
     public long score() {
         return cars.values().stream()
                 .flatMap(c -> c.getRides().stream())
+                .filter(r -> r.getEnd() <= steps)
                 .map(r -> r.score(bonus))
                 .mapToLong(s -> s)
                 .sum();
     }
 
+    private Optional<Quote> bestQuote(RideRequest r) {
+        return getCars().values().stream()
+                .map(car -> car.quote(r))
+                .min(Comparator.comparing(Quote::getArriveAt)
+                        .thenComparing(Quote::wasted));
+    }
+
+    private long sort(RideRequest r) {
+        return bestQuote(r).map(Quote::getWaitFor).orElse(Long.MAX_VALUE);
+    }
+
     public void sortRides() {
 
-        this.rideRequests = rideRequests.stream()
-                .sorted(Comparator.comparing(RideRequest::getEarliest).thenComparing(RideRequest::antiDistance))
-                .collect(Collectors.toCollection(LinkedList::new));
-//
 //        this.rideRequests = rideRequests.stream()
-//                .sorted(Comparator.comparing(RideRequest::getEarliest)
-//                        .thenComparing(rideRequest -> -rideRequest.distance()))
+//                .sorted(
+//                        Comparator.comparing(this::sort)
+//                                .thenComparing(RideRequest::getEarliest)
+//                                .thenComparing(RideRequest::antiDistance))
 //                .collect(Collectors.toCollection(LinkedList::new));
+//
+        this.rideRequests = rideRequests.stream()
+                .sorted(Comparator.comparing(RideRequest::getEarliest)
+                        .thenComparing(rideRequest -> -rideRequest.distance()))
+                .collect(Collectors.toCollection(LinkedList::new));
+
+
     }
 
     public String outputRides() {

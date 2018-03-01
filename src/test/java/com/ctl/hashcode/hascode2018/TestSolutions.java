@@ -65,7 +65,7 @@ public class TestSolutions {
 
     @Test
     public void solveAll() throws Exception {
-        boolean write = true;
+        boolean write = false;
         long total = 0;
         total += solve(getB(), "b.solution", write);
         total += solve(getC(), "c.solution", write);
@@ -86,6 +86,8 @@ public class TestSolutions {
 //                .map(c -> c.getRides().size())
 //                .forEach(c -> System.out.println("Rides: " + c));
 //        System.out.println("-----------");
-        return state.score();
+        final long score = state.score();
+        System.out.println(MessageFormat.format("{0}", score));
+        return score;
     }
 }
