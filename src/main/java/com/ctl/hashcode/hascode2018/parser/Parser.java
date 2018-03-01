@@ -73,7 +73,7 @@ public class Parser {
                 .rideRequests(rideRequests);
 
         for (int carId = 0; carId < numCars; carId++) {
-            builder.car(carId, Car.init(carId));
+            builder.car(carId, Car.builder().id(carId).build());
         }
 
         State state = builder
