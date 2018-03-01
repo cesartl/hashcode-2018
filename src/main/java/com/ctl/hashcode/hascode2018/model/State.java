@@ -38,4 +38,19 @@ public class State {
     public long score(){
         return 0;
     }
+
+    public String outputRides() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        for (Car car : cars.values()) {
+            sb.append(car.getRides().size());
+            sb.append(" ");
+            for (Ride ride : car.getRides()) {
+                sb.append(ride.getRideRequest().getId());
+                sb.append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }

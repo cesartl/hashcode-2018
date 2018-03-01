@@ -23,6 +23,6 @@ public class TestSolutions {
         final State a = getA();
         final Solver solver = new Solver(new BasicScheduler());
         solver.solve(a);
-        System.out.println();
+        System.out.println(a.outputRides());
     }
 }
