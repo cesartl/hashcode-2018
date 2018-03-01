@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class TestSolutions {
 
-    public State getA() throws Exception{
+    public State getA() throws Exception {
         String file = "/inputs/a_example.in";
         URL path = TestParser.class.getResource(file);
         final String fileName = Paths.get(path.toURI()).toFile().getAbsolutePath();
@@ -23,7 +23,9 @@ public class TestSolutions {
         final State a = getA();
         final Solver solver = new Solver(new BasicScheduler());
         solver.solve(a);
+
         System.out.println();
         System.out.println(a.score());
+        System.out.println(a.outputRides());
     }
 }
