@@ -5,16 +5,23 @@ import com.ctl.hashcode.hascode2018.model.RideRequest;
 import com.ctl.hashcode.hascode2018.model.State;
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 public class Solver {
 
     private final Scheduler scheduler;
 
     public void solve(State state) {
+
         while (state.getRideRequests().isEmpty()) {
             final RideRequest rideRequest = state.getRideRequests().pop();
-            final Ride ride = scheduler.schedule(state, rideRequest);
-            state.addRide(ride);
+            Optional<Ride> ride = scheduler.schedule(state, rideRequest);
+            if (ride.isPresent()) {
+                state.addRide(ride.get());
+            } else {
+                break;
+            }
         }
     }
 

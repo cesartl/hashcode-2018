@@ -11,4 +11,8 @@ public class RideRequest {
     private final Position to;
     private final long earliest;
     private final long latest;
+
+    public long distance() {
+        return from.distanceWith(to);
+    }
 }

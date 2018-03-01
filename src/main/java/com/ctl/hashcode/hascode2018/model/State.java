@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.util.Deque;
-import java.util.List;
 import java.util.Map;
 
 @Value
@@ -27,7 +26,6 @@ public class State {
     }
 
     public void addRide(Ride ride) {
-        //TODO
-        //
+        cars.get(ride.getCarId()).getRides().add(ride);
     }
 }
