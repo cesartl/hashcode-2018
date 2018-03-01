@@ -43,7 +43,7 @@ public class State {
                 .sum();
     }
 
-    public String outputRides() throws Exception {
+    public String outputRides(){
         StringBuilder sb = new StringBuilder();
         for (Car car : cars.values()) {
             sb.append(car.getRides().size());
