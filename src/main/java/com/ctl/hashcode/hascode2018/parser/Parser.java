@@ -27,6 +27,10 @@ public class Parser {
         int bonus = Integer.parseInt(headerValues[4]);
         long steps = Integer.parseInt(headerValues[5]);
 
+        if (numRides != rides.size()) {
+            throw new IllegalMonitorStateException("Number of lines does not match expected rides");
+        }
+
         int id = 0;
         Deque<RideRequest> rideRequests = new ArrayDeque<>();
         for (String ride : rides) {
