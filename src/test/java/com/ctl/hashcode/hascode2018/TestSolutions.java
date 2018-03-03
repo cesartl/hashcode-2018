@@ -85,6 +85,7 @@ public class TestSolutions {
         System.out.println("----evolve----");
 
         for (int i = 0; i <= 1000; i++) c = State.getBetterMutation(c);
+        for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
 
         total2 += b.score();
         total2 += c.score();
