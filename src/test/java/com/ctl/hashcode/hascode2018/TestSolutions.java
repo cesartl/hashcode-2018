@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.concurrent.*;
 
 public class TestSolutions {
 
@@ -70,8 +71,6 @@ public class TestSolutions {
         long total2 = 0;
 
 
-
-
         State b = solve(getB(), "b.solution", write);
         State c = solve(getC(), "c.solution", write);
         State d = solve(getD(), "d.solution", write);
@@ -84,8 +83,13 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", total));
         System.out.println("----evolve----");
 
-        for (int i = 0; i <= 1000; i++) c = State.getBetterMutation(c);
-        for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
+        final ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+        final Future<State> evolveC = evolve(c, executorService, 1000);
+        final Future<State> evolveD = evolve(d, executorService, 1000);
+
+        c = evolveC.get();
+        d = evolveD.get();
 
         total2 += b.score();
         total2 += c.score();
@@ -97,6 +101,14 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", d.score()));
         System.out.println(MessageFormat.format("{0}", e.score()));
         System.out.println(MessageFormat.format("{0}", total2));
+    }
+
+    private Future<State> evolve(State state, ExecutorService executor, int iterations) {
+        return executor.submit(() -> {
+            State s = state;
+            for (int i = 0; i <= iterations; i++) s = State.getBetterMutation(s);
+            return s;
+        });
     }
 
 
