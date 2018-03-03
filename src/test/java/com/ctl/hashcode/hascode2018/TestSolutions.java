@@ -67,15 +67,39 @@ public class TestSolutions {
     public void solveAll() throws Exception {
         boolean write = false;
         long total = 0;
-        total += solve(getB(), "b.solution", write);
-        total += solve(getC(), "c.solution", write);
-        total += solve(getD(), "d.solution", write);
-        total += solve(getE(), "e.solution", write);
+        long total2 = 0;
+
+
+
+
+        State b = solve(getB(), "b.solution", write);
+        State c = solve(getC(), "c.solution", write);
+        State d = solve(getD(), "d.solution", write);
+        State e = solve(getE(), "e.solution", write);
+
+        total += b.score();
+        total += c.score();
+        total += d.score();
+        total += e.score();
         System.out.println(MessageFormat.format("{0}", total));
+        System.out.println("----evolve----");
+
+        for (int i = 0; i <= 1000; i++) c = State.getBetterMutation(c);
+
+        total2 += b.score();
+        total2 += c.score();
+        total2 += d.score();
+        total2 += e.score();
+
+        System.out.println(MessageFormat.format("{0}", b.score()));
+        System.out.println(MessageFormat.format("{0}", c.score()));
+        System.out.println(MessageFormat.format("{0}", d.score()));
+        System.out.println(MessageFormat.format("{0}", e.score()));
+        System.out.println(MessageFormat.format("{0}", total2));
     }
 
 
-    private long solve(State state, String fileName, boolean write) throws IOException {
+    private State solve(State state, String fileName, boolean write) throws IOException {
         final Solver solver = new Solver(new BasicScheduler());
         solver.solve(state);
         if (write) {
@@ -88,6 +112,6 @@ public class TestSolutions {
 //        System.out.println("-----------");
         final long score = state.score();
         System.out.println(MessageFormat.format("{0}", score));
-        return score;
+        return state;
     }
 }
