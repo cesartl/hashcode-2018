@@ -2,18 +2,10 @@ package com.ctl.hashcode.hascode2018.model;
 
 import com.google.common.collect.ListMultimap;
 import lombok.*;
-
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
-
 import org.apache.commons.io.FileUtils;
-
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -33,6 +25,7 @@ public class State {
     static State getMutation(State s) {
         Map<Integer, Car> ncars = new HashMap<>();
 
+        // deep copy needed...
         s.cars.forEach((k, car) -> {
                     final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
                     Car cc = Car.builder()
@@ -65,12 +58,9 @@ public class State {
             evolved = State.getMutation(s).mutate();
             evolved.recalc_rides();
             improved = evolved.score();
-            //System.out.println(evolved.outputRides());
             count = count + 1;
-            //System.out.println(improved + " <= " + current);
         }
 
-        ///System.out.println("!!!!" + count);
         if (count >= 2) {
             return s;
         }
@@ -104,14 +94,7 @@ public class State {
         car.setRides(newRides);
     }
 
-    public void removeRide(Ride ride) {
-        final Car car = cars.get(ride.getCarId());
-        final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
-        newRides.remove(ride);
-        car.setRides(newRides);
-    }
-
-
+    // if rides are re-arranged due to a mutation, then the state of the rides needs to be recalculated
     public void recalc_rides() {
         for (Integer key : cars.keySet()) {
             Car car = cars.get(key);
@@ -130,9 +113,7 @@ public class State {
                 addRideToCar(new_car, new_ride);
                 this.replaceRide(r, new_ride);
             }
-
         }
-
     }
 
     public void addRideToCar(Car car, Ride ride) {
@@ -150,6 +131,8 @@ public class State {
                 .sum();
     }
 
+
+    // A very simple mutation. Simply move one ride from car to another car.
     public State mutate() {
         Car car1 = cars.get(rn.nextInt(cars.size()));
         Car car2 = cars.get(rn.nextInt(cars.size()));
@@ -159,7 +142,6 @@ public class State {
 
         if (rides1.size() > 0) {
             int pick = 0;
-            //pick = rides1.size() - 1;
             pick = rn.nextInt(rides1.size());
             Ride ride = rides1.get(pick);
             rides1.remove(ride);

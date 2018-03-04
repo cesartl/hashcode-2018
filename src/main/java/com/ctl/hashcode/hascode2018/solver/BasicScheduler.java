@@ -12,7 +12,7 @@ public class BasicScheduler implements Scheduler {
 
     @Override
     public Optional<Ride> schedule(State state, RideRequest rideRequest) {
-        //1 find the cars that can be here on time
+        // find the cars that can be here on time
         return state.getCars().values().stream()
                 .map(car -> car.quote(rideRequest))
                 .min(Comparator.comparing(Quote::getArriveAt)

@@ -24,7 +24,6 @@ public class Solver {
                     state.addRide(get);
                 } else {
                     stragglers.add(rideRequest);
-                    //state.addRide(get);
                 }
             } else {
                 System.out.println("No ride!!!!!!");
@@ -32,6 +31,15 @@ public class Solver {
             }
         }
 
+        // this makes no difference to the score worked out so far...
+        // what it does do, is make sure all possible rides are in the grid
+        // to start with the below rides will be all be dropped as they currently
+        // fall outside the end time.
+
+        // however what it does do, allow them to mutated into different positions
+        // which would not be possible if they were not in the grid at all.
+
+        // this was added to enable that only.
         while (!stragglers.isEmpty()) {
             final RideRequest rideRequest = stragglers.pop();
             Optional<Ride> ride = scheduler.schedule(state, rideRequest);
