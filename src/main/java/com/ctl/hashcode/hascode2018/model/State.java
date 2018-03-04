@@ -63,9 +63,9 @@ public class State {
 
         ///System.out.println("!!!!" + count);
         if (count >= 2) {
-            System.out.println("!!!!" + s.score());
             return s;
         }
+        System.out.println("improved :: " + evolved.score());
         return evolved;
     }
 
