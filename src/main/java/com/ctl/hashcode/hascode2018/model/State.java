@@ -22,6 +22,17 @@ public class State {
 
 
     static State getMutation(State s) {
+        Map<Integer, Car> ncars = new HashMap<>();
+
+        s.cars.forEach((k, car) -> {
+                    final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
+                    Car cc = Car.builder()
+                            .id(car.getId())
+                            .rides(newRides)
+                            .build();
+                    ncars.put(k,cc);
+                }
+        );
 
         State copy = State.builder().
                 rows(s.rows).
@@ -29,25 +40,32 @@ public class State {
                 numberOfCars(s.numberOfCars).
                 rideRequests(s.rideRequests).
                 bonus(s.bonus).
+                cars(ncars).
                 steps(s.steps).build();
 
         return copy.mutate();
     }
 
     static public State getBetterMutation(State s) {
-
-        Long current =  s.score();
+        final Long current = s.score();
         Long improved = 0L;
         State evolved = null;
-        long counter = 0L;
+        int count = 0;
 
-
-        while (improved <= current) {
-            evolved = s.mutate();
+        while (improved <= current && count < 2) {
+            evolved = State.getMutation(s).mutate();
+            evolved.recalc_rides();
             improved = evolved.score();
-            counter += 1;
+            //System.out.println(evolved.outputRides());
+            count = count + 1;
+            //System.out.println(improved + " <= " + current);
         }
 
+        ///System.out.println("!!!!" + count);
+        if (count >= 2) {
+            System.out.println("!!!!" + s.score());
+            return s;
+        }
         return evolved;
     }
 
@@ -68,6 +86,51 @@ public class State {
         car.setRides(newRides);
     }
 
+    public void replaceRide(Ride ride1, Ride ride2) {
+        final Car car = cars.get(ride2.getCarId());
+        final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
+        newRides.remove(ride1);
+        newRides.add(ride2);
+        car.setRides(newRides);
+    }
+
+    public void removeRide(Ride ride) {
+        final Car car = cars.get(ride.getCarId());
+        final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
+        newRides.remove(ride);
+        car.setRides(newRides);
+    }
+
+
+    public void recalc_rides() {
+        for (Integer key : cars.keySet()) {
+            Car car = cars.get(key);
+            Car new_car = Car.init(key);
+            List<Ride> old_rides = car.getRides();
+
+            for (Ride r : old_rides) {
+                RideRequest rideRequest = r.getRideRequest();
+                Quote quote = new_car.quote(r.getRideRequest());
+                Ride new_ride = Ride.builder()
+                        .carId(quote.getCarId())
+                        .rideRequest(rideRequest)
+                        .start(quote.getArriveAt())
+                        .end(rideRequest.distance() + quote.getArriveAt())
+                        .build();
+                addRideToCar(new_car, new_ride);
+                this.replaceRide(r, new_ride);
+            }
+
+        }
+
+    }
+
+    public void addRideToCar(Car car, Ride ride) {
+        final ArrayList<Ride> newRides = new ArrayList<>(car.getRides());
+        newRides.add(ride);
+        car.setRides(newRides);
+    }
+
     public long score() {
         return cars.values().stream()
                 .flatMap(c -> c.getRides().stream())
@@ -80,13 +143,14 @@ public class State {
     public State mutate() {
         Car car1 = cars.get(rn.nextInt(cars.size()));
         Car car2 = cars.get(rn.nextInt(cars.size()));
+        if (car1.getId() == car2.getId()) return this;
         ArrayList<Ride> rides1 = new ArrayList<>(car1.getRides());
         ArrayList<Ride> rides2 = new ArrayList<>(car2.getRides());
 
-        if (rides1.size() > 0) {
+        if (rides1.size() > 0 && rides2.size() > 0) {
             Ride ride = rides1.get(rn.nextInt(rides1.size()));
             rides1.remove(ride);
-            rides2.add(ride);
+            rides2.add(rn.nextInt(rides2.size()),ride);
             car1.setRides(rides1);
             car2.setRides(rides2);
         }

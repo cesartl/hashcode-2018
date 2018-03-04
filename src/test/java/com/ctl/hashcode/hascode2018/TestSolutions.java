@@ -65,16 +65,21 @@ public class TestSolutions {
 
     @Test
     public void solveAll() throws Exception {
-        boolean write = false;
+        boolean write = true;
         long total = 0;
         long total2 = 0;
 
 
 
-
+        System.out.println("A");
+        State a = solve(getA(), "a.solution", write);
+        System.out.println("B");
         State b = solve(getB(), "b.solution", write);
+        System.out.println("C");
         State c = solve(getC(), "c.solution", write);
+        System.out.println("D");
         State d = solve(getD(), "d.solution", write);
+        System.out.println("E");
         State e = solve(getE(), "e.solution", write);
 
         total += b.score();
@@ -84,14 +89,24 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", total));
         System.out.println("----evolve----");
 
-        for (int i = 0; i <= 1000; i++) c = State.getBetterMutation(c);
-        for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
+        for (int i = 0; i < 1; i++) a = State.getBetterMutation(a);
+        //for (int i = 0; i <= 1; i++) b = State.getBetterMutation(b);
+        for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c);
+        //for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
+        //for (int i = 0; i <= 1; i++) e = State.getBetterMutation(e);
 
         total2 += b.score();
         total2 += c.score();
         total2 += d.score();
         total2 += e.score();
 
+        FileUtils.write(new File("a_evolved.solution"), a.outputRides(), Charset.defaultCharset());
+        //FileUtils.write(new File("b_evolved.solution"), b.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("c_evolved.solution"), c.outputRides(), Charset.defaultCharset());
+        //FileUtils.write(new File("d_evolved.solution"), d.outputRides(), Charset.defaultCharset());
+        //FileUtils.write(new File("e_evolved.solution"), e.outputRides(), Charset.defaultCharset());
+
+        System.out.println(MessageFormat.format("{0}", a.score()));
         System.out.println(MessageFormat.format("{0}", b.score()));
         System.out.println(MessageFormat.format("{0}", c.score()));
         System.out.println(MessageFormat.format("{0}", d.score()));

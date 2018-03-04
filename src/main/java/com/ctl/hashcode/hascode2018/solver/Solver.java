@@ -21,6 +21,8 @@ public class Solver {
                 final Ride get = ride.get();
                 if (get.getEnd() <= state.getSteps() && get.getEnd() <= rideRequest.getLatest()) {
                     state.addRide(get);
+                } else {
+                    state.addRide(get);
                 }
             } else {
                 System.out.println("No ride!!!!!!");
