@@ -157,10 +157,10 @@ public class State {
         ArrayList<Ride> rides1 = new ArrayList<>(car1.getRides());
         ArrayList<Ride> rides2 = new ArrayList<>(car2.getRides());
 
-        if (rides1.size() > 0 && rides2.size() > 0) {
+        if (rides1.size() > 0) {
             int pick = 0;
-            pick = rides1.size() - 1;
-            //pick = rn.nextInt(rides1.size();
+            //pick = rides1.size() - 1;
+            pick = rn.nextInt(rides1.size());
             Ride ride = rides1.get(pick);
             rides1.remove(ride);
             int index = 0;

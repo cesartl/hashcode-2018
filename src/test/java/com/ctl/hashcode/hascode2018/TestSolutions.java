@@ -89,10 +89,10 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", total));
         System.out.println("----evolve----");
 
-        for (int i = 0; i < 1; i++) a = State.getBetterMutation(a, "a.working.solution");
+        //for (int i = 0; i < 1; i++) a = State.getBetterMutation(a, "a.working.solution");
         //for (int i = 0; i <= 1; i++) b = State.getBetterMutation(b);
-        for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c,"c.working.solution");
-        //for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
+        //for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c,"c.working.solution");
+        for (int i = 0; i <= 1_000_000; i++) d = State.getBetterMutation(d, "d.working.solution");
         //for (int i = 0; i <= 1; i++) e = State.getBetterMutation(e);
 
         total2 += b.score();
@@ -100,10 +100,10 @@ public class TestSolutions {
         total2 += d.score();
         total2 += e.score();
 
-        FileUtils.write(new File("a_evolved.solution"), a.outputRides(), Charset.defaultCharset());
+        //FileUtils.write(new File("a_evolved.solution"), a.outputRides(), Charset.defaultCharset());
         //FileUtils.write(new File("b_evolved.solution"), b.outputRides(), Charset.defaultCharset());
-        FileUtils.write(new File("c_evolved.solution"), c.outputRides(), Charset.defaultCharset());
-        //FileUtils.write(new File("d_evolved.solution"), d.outputRides(), Charset.defaultCharset());
+        //FileUtils.write(new File("c_evolved.solution"), c.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("d_evolved.solution"), d.outputRides(), Charset.defaultCharset());
         //FileUtils.write(new File("e_evolved.solution"), e.outputRides(), Charset.defaultCharset());
 
         System.out.println(MessageFormat.format("{0}", a.score()));
