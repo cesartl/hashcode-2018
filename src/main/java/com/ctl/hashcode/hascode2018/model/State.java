@@ -3,6 +3,15 @@ package com.ctl.hashcode.hascode2018.model;
 import com.google.common.collect.ListMultimap;
 import lombok.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+
+import org.apache.commons.io.FileUtils;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -46,7 +55,7 @@ public class State {
         return copy.mutate();
     }
 
-    static public State getBetterMutation(State s) {
+    static public State getBetterMutation(State s, String filename)  throws Exception {
         final Long current = s.score();
         Long improved = 0L;
         State evolved = null;
@@ -66,6 +75,7 @@ public class State {
             return s;
         }
         System.out.println("improved :: " + evolved.score());
+        FileUtils.write(new File(filename), evolved.outputRides(), Charset.defaultCharset());
         return evolved;
     }
 
@@ -148,9 +158,14 @@ public class State {
         ArrayList<Ride> rides2 = new ArrayList<>(car2.getRides());
 
         if (rides1.size() > 0 && rides2.size() > 0) {
-            Ride ride = rides1.get(rn.nextInt(rides1.size()));
+            int pick = 0;
+            pick = rides1.size() - 1;
+            //pick = rn.nextInt(rides1.size();
+            Ride ride = rides1.get(pick);
             rides1.remove(ride);
-            rides2.add(rn.nextInt(rides2.size()),ride);
+            int index = 0;
+            if (rides2.size() > 0) index = rn.nextInt(rides2.size());
+            rides2.add(index,ride);
             car1.setRides(rides1);
             car2.setRides(rides2);
         }

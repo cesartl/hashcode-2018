@@ -89,9 +89,9 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", total));
         System.out.println("----evolve----");
 
-        for (int i = 0; i < 1; i++) a = State.getBetterMutation(a);
+        for (int i = 0; i < 1; i++) a = State.getBetterMutation(a, "a.working.solution");
         //for (int i = 0; i <= 1; i++) b = State.getBetterMutation(b);
-        for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c);
+        for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c,"c.working.solution");
         //for (int i = 0; i <= 1000; i++) d = State.getBetterMutation(d);
         //for (int i = 0; i <= 1; i++) e = State.getBetterMutation(e);
 
