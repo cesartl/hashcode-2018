@@ -64,6 +64,19 @@ public class TestSolutions {
     }
 
     @Test
+    public void solveC_forever() throws Exception {
+        State c = solve(getC(), "c.solution", true);
+        for (;;) c = State.getBetterMutation(c,"c.working.solution");
+    }
+
+    @Test
+    public void solveD_forever() throws Exception {
+        State d = solve(getD(), "d.solution", true);
+        for (;;) d = State.getBetterMutation(d,"d.working.solution");
+    }
+
+
+    @Test
     public void solveAll() throws Exception {
         boolean write = true;
         long total = 0;
