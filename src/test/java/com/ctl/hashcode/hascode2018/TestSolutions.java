@@ -89,22 +89,27 @@ public class TestSolutions {
         System.out.println(MessageFormat.format("{0}", total));
         System.out.println("----evolve----");
 
-        //for (int i = 0; i < 1; i++) a = State.getBetterMutation(a, "a.working.solution");
-        //for (int i = 0; i <= 1; i++) b = State.getBetterMutation(b);
-        //for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c,"c.working.solution");
+        System.out.println("----evolving a---- trivial");
+        for (int i = 0; i < 10; i++) a = State.getBetterMutation(a, "a.working.solution");
+        System.out.println("----evolving b---- not needed");
+        for (int i = 0; i <= 100_000; i++) b = State.getBetterMutation(b, "b.working.solution");
+        System.out.println("----evolving c----");
+        for (int i = 0; i <= 1_000_000; i++) c = State.getBetterMutation(c,"c.working.solution");
+        System.out.println("----evolving d----");
         for (int i = 0; i <= 1_000_000; i++) d = State.getBetterMutation(d, "d.working.solution");
-        //for (int i = 0; i <= 1; i++) e = State.getBetterMutation(e);
-
+        System.out.println("----evolving e----");
+        for (int i = 0; i <= 1_000_000; i++) e = State.getBetterMutation(e,"e.working.solution");
+        System.out.println("----evolved----");
         total2 += b.score();
         total2 += c.score();
         total2 += d.score();
         total2 += e.score();
 
-        //FileUtils.write(new File("a_evolved.solution"), a.outputRides(), Charset.defaultCharset());
-        //FileUtils.write(new File("b_evolved.solution"), b.outputRides(), Charset.defaultCharset());
-        //FileUtils.write(new File("c_evolved.solution"), c.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("a_evolved.solution"), a.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("b_evolved.solution"), b.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("c_evolved.solution"), c.outputRides(), Charset.defaultCharset());
         FileUtils.write(new File("d_evolved.solution"), d.outputRides(), Charset.defaultCharset());
-        //FileUtils.write(new File("e_evolved.solution"), e.outputRides(), Charset.defaultCharset());
+        FileUtils.write(new File("e_evolved.solution"), e.outputRides(), Charset.defaultCharset());
 
         System.out.println(MessageFormat.format("{0}", a.score()));
         System.out.println(MessageFormat.format("{0}", b.score()));
