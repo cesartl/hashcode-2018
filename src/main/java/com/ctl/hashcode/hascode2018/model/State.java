@@ -133,7 +133,7 @@ public class State {
 
 
     // A very simple mutation. Simply move one ride from car to another car.
-    public State mutate() {
+    public State mutate1() {
         Car car1 = cars.get(rn.nextInt(cars.size()));
         Car car2 = cars.get(rn.nextInt(cars.size()));
         if (car1.getId() == car2.getId()) return this;
@@ -148,6 +148,28 @@ public class State {
             int index = 0;
             if (rides2.size() > 0) index = rn.nextInt(rides2.size());
             rides2.add(index,ride);
+            car1.setRides(rides1);
+            car2.setRides(rides2);
+        }
+        return this;
+    }
+
+    // A very simple mutation. Simply move one ride from car to another car.
+    public State mutate() {
+        Car car1 = cars.get(rn.nextInt(cars.size()));
+        Car car2 = cars.get(rn.nextInt(cars.size()));
+        if (car1.getId() == car2.getId()) return this;
+        ArrayList<Ride> rides1 = new ArrayList<>(car1.getRides());
+        ArrayList<Ride> rides2 = new ArrayList<>(car2.getRides());
+
+        if (rides1.size() > 0) {
+            int pick = rn.nextInt(rides1.size());
+            int size = rn.nextInt(rides1.size() - pick);
+            int index = 0;
+            if (rides2.size() > 0) index = rn.nextInt(rides2.size());
+            if (rides2.size() > 0 && index + size >= rides1.size()) index = rides2.size();
+            rides2.addAll(index,rides1.subList(pick, pick + size));
+            rides1.removeAll(rides1.subList(pick, pick + size));
             car1.setRides(rides1);
             car2.setRides(rides2);
         }

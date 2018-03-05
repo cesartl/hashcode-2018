@@ -77,6 +77,13 @@ public class TestSolutions {
 
 
     @Test
+    public void solveE_forever() throws Exception {
+        State e = solve(getE(), "e.solution", true);
+        for (;;) e = State.getBetterMutation(e,"e.working.solution");
+    }
+
+
+    @Test
     public void solveAll() throws Exception {
         boolean write = true;
         long total = 0;
