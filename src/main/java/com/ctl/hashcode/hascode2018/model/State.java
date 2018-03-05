@@ -168,8 +168,18 @@ public class State {
             int index = 0;
             if (rides2.size() > 0) index = rn.nextInt(rides2.size());
             if (rides2.size() > 0 && index + size >= rides1.size()) index = rides2.size();
+            int size2 = index + size;
+            if (size2 >= rides2.size()) size2 = rides2.size();
+            size2 = Math.max(index,size2);
+
             rides2.addAll(index,rides1.subList(pick, pick + size));
-            rides1.removeAll(rides1.subList(pick, pick + size));
+
+            rides1.addAll(pick,rides2.subList(index, size2));
+            rides2.removeAll  (rides2.subList(index, size2));
+
+            rides1.removeAll(   rides1.subList(pick, pick + size));
+
+
             car1.setRides(rides1);
             car2.setRides(rides2);
         }
